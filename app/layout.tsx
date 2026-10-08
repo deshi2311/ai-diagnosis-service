@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import ThemeRegistry from "./components/ThemeRegistry";
 import CtaProvider from "./components/CtaProvider";
+import AuthSessionProvider from "./components/AuthSessionProvider";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -18,7 +19,9 @@ export default function RootLayout({
     <html lang="ja">
       <body>
         <ThemeRegistry>
-          <CtaProvider>{children}</CtaProvider>
+          <AuthSessionProvider>
+            <CtaProvider>{children}</CtaProvider>
+          </AuthSessionProvider>
         </ThemeRegistry>
       </body>
     </html>

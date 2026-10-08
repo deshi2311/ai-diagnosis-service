@@ -1,5 +1,6 @@
 import { chromium } from "playwright-core";
 
+const BASE_URL = (process.env.BASE_URL || "http://localhost:3000").replace(/\/$/, "");
 const RESULTS = [];
 
 function record(id, ok, note = "") {
@@ -9,7 +10,7 @@ function record(id, ok, note = "") {
 
 async function checkViewport(page, label, width, height) {
   await page.setViewportSize({ width, height });
-  await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+  await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
   await page.waitForTimeout(500);
 
   const metrics = await page.evaluate(() => {
@@ -76,7 +77,7 @@ async function main() {
   page.on("pageerror", (err) => consoleErrors.push(String(err)));
 
   // P-1
-  const res = await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+  const res = await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
   record("P-1", res && res.ok(), `status=${res?.status()}`);
 
   const content = await page.evaluate(() => {
@@ -137,13 +138,13 @@ async function main() {
   let allComingSoon = true;
   let noNavAway = true;
   for (let i = 0; i < ctaCount; i++) {
-    await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+    await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
     await page.locator('button:has-text("無料で診断を始める")').nth(i).click();
     await page.waitForTimeout(400);
     const url = page.url();
     const snack = await page.locator("text=Coming Soon").isVisible().catch(() => false);
     if (!snack) allComingSoon = false;
-    if (!url.startsWith("http://localhost:3000/")) noNavAway = false;
+    if (!url.startsWith(`${BASE_URL}/`) && url !== `${BASE_URL}/` && !url.startsWith(BASE_URL)) noNavAway = false;
     // dismiss snackbar if needed
     const close = page.locator('[aria-label="Close"]').first();
     if (await close.isVisible().catch(() => false)) await close.click().catch(() => {});
@@ -153,7 +154,7 @@ async function main() {
   record("C-4", allComingSoon && noNavAway && ctaCount === 3);
 
   // Links
-  await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+  await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
   await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
   await page.waitForTimeout(200);
   await page.locator('a:has-text("AIキャリア診断サービス")').first().click();
@@ -166,7 +167,7 @@ async function main() {
     ["L-3", "#steps", "診断の流れ"],
     ["L-4", "#faq", "FAQ"],
   ]) {
-    await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+    await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
     await page.locator(`nav a:has-text("${label}"), a:has-text("${label}")`).first().click();
     await page.waitForTimeout(700);
     const info = await page.evaluate((sel) => {
@@ -182,7 +183,7 @@ async function main() {
   let hashOk = true;
   const hashNotes = [];
   for (const hash of ["#features", "#steps", "#faq"]) {
-    await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+    await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
     await page.evaluate((h) => {
       location.hash = h;
     }, hash);
@@ -204,7 +205,7 @@ async function main() {
   record("L-5", hashOk, hashNotes.join(" "));
 
   // Icons
-  await page.goto("http://localhost:3000/", { waitUntil: "networkidle" });
+  await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
   const iconInfo = await page.evaluate(() => {
     const sections = Array.from(document.querySelectorAll("section"));
     const problemSection = sections.find((s) => s.innerText.includes("こんなお悩みありませんか？"));

@@ -8,6 +8,7 @@ import {
   Typography,
 } from "@mui/material";
 import CtaButton from "./CtaButton";
+import HeaderAuth from "./HeaderAuth";
 
 const NAV_ITEMS = [
   { label: "特徴", href: "#features" },
@@ -100,8 +101,12 @@ export default function Header() {
             order: { xs: 2, md: 3 },
             ml: { xs: "auto", md: 0 },
             flexShrink: 0,
+            display: "flex",
+            alignItems: "center",
+            gap: 1,
           }}
         >
+          <HeaderAuth />
           <CtaButton size="medium" sx={{ px: { xs: 2, sm: 3 }, py: 1 }} />
         </Box>
       </Toolbar>
