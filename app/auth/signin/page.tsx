@@ -10,8 +10,18 @@ export default async function SignInPage() {
   }
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default", py: { xs: 8, md: 12 } }}>
-      <Container maxWidth="sm">
+    <Box
+      sx={{
+        position: "relative",
+        overflow: "hidden",
+        minHeight: "100vh",
+        py: { xs: 8, md: 12 },
+        display: "flex",
+        alignItems: "center",
+      }}
+    >
+      <Box className="dq-stars" aria-hidden />
+      <Container maxWidth="sm" sx={{ position: "relative", zIndex: 1 }}>
         <SignInCard />
       </Container>
     </Box>

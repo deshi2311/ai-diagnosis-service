@@ -1,8 +1,6 @@
 import {
   Box,
   Button,
-  Card,
-  CardContent,
   Container,
   List,
   ListItem,
@@ -16,6 +14,8 @@ import { auth } from "@/auth";
 import { connectMongo } from "@/lib/mongoose";
 import { Diagnosis } from "@/lib/models/Diagnosis";
 import MemberHeader from "@/app/components/MemberHeader";
+import RpgWindow from "@/app/components/RpgWindow";
+import { dqColors } from "@/app/theme";
 
 export const dynamic = "force-dynamic";
 
@@ -37,74 +37,84 @@ export default async function DiagnosisResultPage({ searchParams }: Props) {
   }
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
+    <Box sx={{ minHeight: "100vh" }}>
       <MemberHeader name={session.user.name} image={session.user.image} />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
-        <Typography component="h1" variant="h4" sx={{ fontWeight: 800, mb: 1 }}>
-          診断結果
+        <Typography
+          component="h1"
+          sx={{
+            fontFamily: "var(--font-display), DotGothic16, monospace",
+            fontSize: { xs: "1.5rem", md: "1.9rem" },
+            color: dqColors.gold,
+            letterSpacing: "0.12em",
+            mb: 1,
+          }}
+        >
+          てんしょく せいこう！
         </Typography>
-        <Typography color="text.secondary" sx={{ mb: 3 }}>
+        <Typography sx={{ color: dqColors.parchment, opacity: 0.8, mb: 3 }}>
           AI分析が完了しました
         </Typography>
 
-        <Stack spacing={2}>
-          <Card elevation={0} sx={{ border: "1px solid", borderColor: "divider" }}>
-            <CardContent>
-              <Typography variant="overline" color="primary">
-                強みタイプ
-              </Typography>
-              <Typography variant="h5" sx={{ fontWeight: 700, mb: 2 }}>
-                {doc.result?.strengthType}
-              </Typography>
-              <Typography sx={{ whiteSpace: "pre-wrap" }}>
-                {doc.result?.summary}
-              </Typography>
-            </CardContent>
-          </Card>
+        <Stack spacing={2.5}>
+          <RpgWindow title="つよさタイプ" className="dq-enter">
+            <Typography
+              sx={{
+                fontFamily: "var(--font-display), DotGothic16, monospace",
+                fontSize: "1.35rem",
+                color: dqColors.crimson,
+                mb: 2,
+                letterSpacing: "0.06em",
+              }}
+            >
+              {doc.result?.strengthType}
+            </Typography>
+            <Typography sx={{ whiteSpace: "pre-wrap", lineHeight: 1.8 }}>
+              {doc.result?.summary}
+            </Typography>
+          </RpgWindow>
 
-          <Card elevation={0} sx={{ border: "1px solid", borderColor: "divider" }}>
-            <CardContent>
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
-                向いている職種
-              </Typography>
-              <List dense>
-                {(doc.result?.suitableJobs ?? []).map((job: string) => (
-                  <ListItem key={job} disableGutters>
-                    <ListItemText primary={job} />
-                  </ListItem>
-                ))}
-              </List>
-            </CardContent>
-          </Card>
+          <RpgWindow title="むいている しょくぎょう" className="dq-enter-delay">
+            <List dense>
+              {(doc.result?.suitableJobs ?? []).map((job: string) => (
+                <ListItem key={job} disableGutters>
+                  <ListItemText
+                    primary={
+                      <Typography className="dq-cursor" sx={{ color: dqColors.ink }}>
+                        {job}
+                      </Typography>
+                    }
+                  />
+                </ListItem>
+              ))}
+            </List>
+          </RpgWindow>
 
-          <Card elevation={0} sx={{ border: "1px solid", borderColor: "divider" }}>
-            <CardContent>
-              <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
-                キャリアロードマップ
-              </Typography>
-              <Typography sx={{ mb: 1 }}>
-                <strong>短期:</strong> {doc.careerRoadmap?.shortTerm}
-              </Typography>
-              <Typography sx={{ mb: 1 }}>
-                <strong>中期:</strong> {doc.careerRoadmap?.midTerm}
-              </Typography>
-              <Typography>
-                <strong>長期:</strong> {doc.careerRoadmap?.longTerm}
-              </Typography>
-            </CardContent>
-          </Card>
+          <RpgWindow title="キャリアロードマップ">
+            <Typography sx={{ mb: 1.5 }}>
+              <strong>みじかいみち（短期）:</strong> {doc.careerRoadmap?.shortTerm}
+            </Typography>
+            <Typography sx={{ mb: 1.5 }}>
+              <strong>なかみち（中期）:</strong> {doc.careerRoadmap?.midTerm}
+            </Typography>
+            <Typography>
+              <strong>とおみち（長期）:</strong> {doc.careerRoadmap?.longTerm}
+            </Typography>
+          </RpgWindow>
 
-          <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-            <Button href={`/diagnosis/${id}`} variant="contained">
-              詳細を見る
-            </Button>
-            <Button href="/diagnosis/history" variant="outlined">
-              履歴一覧
-            </Button>
-            <Button href="/diagnosis" variant="text">
-              もう一度診断
-            </Button>
-          </Stack>
+          <RpgWindow title="コマンド">
+            <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1 }}>
+              <Button href={`/diagnosis/${id}`} variant="contained" className="dq-cursor">
+                くわしくみる
+              </Button>
+              <Button href="/diagnosis/history" variant="outlined">
+                れきしをみる
+              </Button>
+              <Button href="/diagnosis" variant="outlined">
+                もういちど
+              </Button>
+            </Stack>
+          </RpgWindow>
         </Stack>
       </Container>
     </Box>

@@ -10,6 +10,7 @@ import {
   Typography,
 } from "@mui/material";
 import Link from "next/link";
+import { dqColors } from "../theme";
 
 type MemberHeaderProps = {
   name?: string | null;
@@ -18,12 +19,7 @@ type MemberHeaderProps = {
 
 export default function MemberHeader({ name, image }: MemberHeaderProps) {
   return (
-    <AppBar
-      position="static"
-      color="inherit"
-      elevation={0}
-      sx={{ borderBottom: "1px solid", borderColor: "divider", bgcolor: "background.paper" }}
-    >
+    <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar
         sx={{
           gap: 2,
@@ -37,13 +33,13 @@ export default function MemberHeader({ name, image }: MemberHeaderProps) {
         <Typography
           component={Link}
           href="/"
-          variant="h6"
           sx={{
-            fontWeight: 800,
-            color: "primary.main",
+            fontFamily: "var(--font-display), DotGothic16, monospace",
+            color: dqColors.gold,
             textDecoration: "none",
             mr: "auto",
-            fontSize: { xs: "1rem", sm: "1.15rem" },
+            fontSize: { xs: "0.95rem", sm: "1.1rem" },
+            letterSpacing: "0.06em",
           }}
         >
           AIキャリア診断サービス
@@ -74,7 +70,12 @@ export default function MemberHeader({ name, image }: MemberHeaderProps) {
           <Avatar
             alt={name ?? "ユーザー"}
             src={image ?? undefined}
-            sx={{ width: 36, height: 36 }}
+            sx={{
+              width: 36,
+              height: 36,
+              border: `2px solid ${dqColors.gold}`,
+              borderRadius: 0,
+            }}
           />
         </Box>
       </Toolbar>

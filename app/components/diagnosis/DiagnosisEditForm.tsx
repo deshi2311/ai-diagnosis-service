@@ -6,12 +6,12 @@ import {
   Alert,
   Box,
   Button,
-  Card,
-  CardContent,
   Stack,
   TextField,
   Typography,
 } from "@mui/material";
+import RpgWindow from "../RpgWindow";
+import { dqColors } from "../../theme";
 
 type EditPayload = {
   id: string;
@@ -78,81 +78,79 @@ export default function DiagnosisEditForm({ initial }: { initial: EditPayload })
   };
 
   return (
-    <Card elevation={0} sx={{ border: "1px solid", borderColor: "divider" }}>
-      <CardContent sx={{ p: { xs: 3, md: 4 } }}>
-        <Typography variant="h5" sx={{ fontWeight: 800, mb: 3 }}>
-          診断結果を編集
-        </Typography>
-        <Box component="form" onSubmit={onSubmit}>
-          <Stack spacing={2}>
-            <TextField
-              label="強みタイプ"
-              value={strengthType}
-              onChange={(e) => setStrengthType(e.target.value)}
-              fullWidth
-              required
-            />
-            <TextField
-              label="向いている職種（1行に1つ）"
-              value={suitableJobs}
-              onChange={(e) => setSuitableJobs(e.target.value)}
-              fullWidth
-              multiline
-              minRows={3}
-            />
-            <TextField
-              label="次の一歩（1行に1つ）"
-              value={nextSteps}
-              onChange={(e) => setNextSteps(e.target.value)}
-              fullWidth
-              multiline
-              minRows={3}
-            />
-            <TextField
-              label="要約"
-              value={summary}
-              onChange={(e) => setSummary(e.target.value)}
-              fullWidth
-              multiline
-              minRows={3}
-              required
-            />
-            <TextField
-              label="短期プラン"
-              value={shortTerm}
-              onChange={(e) => setShortTerm(e.target.value)}
-              fullWidth
-              multiline
-              minRows={2}
-            />
-            <TextField
-              label="中期プラン"
-              value={midTerm}
-              onChange={(e) => setMidTerm(e.target.value)}
-              fullWidth
-              multiline
-              minRows={2}
-            />
-            <TextField
-              label="長期プラン"
-              value={longTerm}
-              onChange={(e) => setLongTerm(e.target.value)}
-              fullWidth
-              multiline
-              minRows={2}
-            />
-            {error && <Alert severity="error">{error}</Alert>}
-            <Stack direction="row" spacing={1}>
-              <Button type="submit" variant="contained" disabled={saving}>
-                {saving ? "保存中..." : "保存する"}
-              </Button>
-              <Button href={`/diagnosis/${initial.id}`} variant="outlined">
-                キャンセル
-              </Button>
-            </Stack>
+    <RpgWindow title="けっかを なおす" className="dq-enter">
+      <Typography sx={{ color: dqColors.inkMuted, mb: 3 }}>
+        診断結果の内容を編集できます
+      </Typography>
+      <Box component="form" onSubmit={onSubmit}>
+        <Stack spacing={2}>
+          <TextField
+            label="強みタイプ"
+            value={strengthType}
+            onChange={(e) => setStrengthType(e.target.value)}
+            fullWidth
+            required
+          />
+          <TextField
+            label="向いている職種（1行に1つ）"
+            value={suitableJobs}
+            onChange={(e) => setSuitableJobs(e.target.value)}
+            fullWidth
+            multiline
+            minRows={3}
+          />
+          <TextField
+            label="次の一歩（1行に1つ）"
+            value={nextSteps}
+            onChange={(e) => setNextSteps(e.target.value)}
+            fullWidth
+            multiline
+            minRows={3}
+          />
+          <TextField
+            label="要約"
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+            fullWidth
+            multiline
+            minRows={3}
+            required
+          />
+          <TextField
+            label="短期プラン"
+            value={shortTerm}
+            onChange={(e) => setShortTerm(e.target.value)}
+            fullWidth
+            multiline
+            minRows={2}
+          />
+          <TextField
+            label="中期プラン"
+            value={midTerm}
+            onChange={(e) => setMidTerm(e.target.value)}
+            fullWidth
+            multiline
+            minRows={2}
+          />
+          <TextField
+            label="長期プラン"
+            value={longTerm}
+            onChange={(e) => setLongTerm(e.target.value)}
+            fullWidth
+            multiline
+            minRows={2}
+          />
+          {error && <Alert severity="error">{error}</Alert>}
+          <Stack direction="row" spacing={1}>
+            <Button type="submit" variant="contained" disabled={saving} className="dq-cursor">
+              {saving ? "ほぞんちゅう..." : "ほぞんする"}
+            </Button>
+            <Button href={`/diagnosis/${initial.id}`} variant="outlined">
+              キャンセル
+            </Button>
           </Stack>
-        </Box>
-      </CardContent>
-    </Card>
+        </Stack>
+      </Box>
+    </RpgWindow>
   );
 }

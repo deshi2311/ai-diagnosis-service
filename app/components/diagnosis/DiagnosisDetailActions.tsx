@@ -26,15 +26,15 @@ export default function DiagnosisDetailActions({ id }: { id: string }) {
   };
 
   return (
-    <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap" }}>
-      <Button href={`/diagnosis/${id}/edit`} variant="contained">
-        編集
+    <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1 }}>
+      <Button href={`/diagnosis/${id}/edit`} variant="contained" className="dq-cursor">
+        なおす
       </Button>
       <Button href="/diagnosis/history" variant="outlined">
-        履歴へ
+        れきしへ
       </Button>
       <Button color="error" variant="outlined" onClick={onDelete} disabled={deleting}>
-        {deleting ? "削除中..." : "削除"}
+        {deleting ? "さくじょちゅう..." : "けす"}
       </Button>
     </Stack>
   );

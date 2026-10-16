@@ -6,10 +6,12 @@ import { useSession } from "next-auth/react";
 
 type CtaButtonProps = Omit<ButtonProps, "onClick" | "children"> & {
   fullWidthOnMobile?: boolean;
+  label?: string;
 };
 
 export default function CtaButton({
   fullWidthOnMobile = false,
+  label = "じんせいを すすめる",
   sx,
   size = "large",
   ...rest
@@ -30,24 +32,18 @@ export default function CtaButton({
       variant="contained"
       size={size}
       onClick={onClick}
-      disableElevation
+      className="dq-cursor"
+      aria-label="無料で診断を始める"
       sx={{
-        px: 3,
-        py: 1.25,
-        fontWeight: 700,
-        borderRadius: 2,
-        background: "linear-gradient(135deg, #1565C0 0%, #42A5F5 100%)",
-        color: "#fff",
+        py: 1.35,
+        fontSize: { xs: "0.95rem", sm: "1.05rem" },
         whiteSpace: "nowrap",
-        "&:hover": {
-          background: "linear-gradient(135deg, #0D47A1 0%, #1E88E5 100%)",
-        },
         ...(fullWidthOnMobile ? { width: { xs: "100%", sm: "auto" } } : {}),
         ...sx,
       }}
       {...rest}
     >
-      無料で診断を始める
+      {label}
     </Button>
   );
 }

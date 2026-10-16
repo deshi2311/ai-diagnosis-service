@@ -21,10 +21,10 @@ export default function HeaderAuth() {
           <Avatar
             alt={session.user.name ?? "ユーザー"}
             src={session.user.image ?? undefined}
-            sx={{ width: 24, height: 24 }}
+            sx={{ width: 24, height: 24, borderRadius: 0 }}
           />
         }
-        sx={{ whiteSpace: "nowrap" }}
+        sx={{ whiteSpace: "nowrap", bgcolor: "background.paper" }}
       >
         マイページ
       </Button>
@@ -37,7 +37,7 @@ export default function HeaderAuth() {
       href="/auth/signin"
       variant="outlined"
       size="small"
-      sx={{ whiteSpace: "nowrap" }}
+      sx={{ whiteSpace: "nowrap", bgcolor: "background.paper" }}
     >
       ログイン
     </Button>

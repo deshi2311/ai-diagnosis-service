@@ -55,7 +55,9 @@ async function main() {
   );
 
   await page.goto(`${BASE}/`, { waitUntil: "networkidle" });
-  const ctaCount = await page.getByRole("button", { name: "無料で診断を始める" }).count();
+  const ctaCount = await page
+    .getByRole("button", { name: /無料で診断を始める|じんせいを すすめる|しんだん/ })
+    .count();
   record("LP-CTA", ctaCount > 0, `ctaCount=${ctaCount}`);
 
   record("P-4", consoleErrors.length === 0, `pageErrors=${consoleErrors.length}`);

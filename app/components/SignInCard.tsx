@@ -1,40 +1,43 @@
 "use client";
 
 import { signIn } from "next-auth/react";
-import { Button, Card, CardContent, Typography, Box } from "@mui/material";
+import { Button, Typography, Box } from "@mui/material";
+import RpgWindow from "./RpgWindow";
+import { dqColors } from "../theme";
 
 export default function SignInCard() {
   return (
-    <Card elevation={0} sx={{ border: "1px solid", borderColor: "divider", maxWidth: 420, mx: "auto" }}>
-      <CardContent sx={{ p: { xs: 3, md: 4 }, textAlign: "center" }}>
-        <Typography component="h1" variant="h5" sx={{ fontWeight: 800, mb: 1 }}>
-          ログイン
-        </Typography>
-        <Typography color="text.secondary" sx={{ mb: 3 }}>
-          Googleアカウントで会員機能を利用できます
-        </Typography>
-        <Button
-          variant="contained"
-          size="large"
-          fullWidth
-          onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
-          sx={{
-            py: 1.25,
-            fontWeight: 700,
-            background: "linear-gradient(135deg, #1565C0 0%, #42A5F5 100%)",
-            "&:hover": {
-              background: "linear-gradient(135deg, #0D47A1 0%, #1E88E5 100%)",
-            },
-          }}
-        >
-          Googleでログイン
-        </Button>
-      </CardContent>
-      <Box sx={{ px: 3, pb: 3, textAlign: "center" }}>
+    <RpgWindow className="dq-enter" sx={{ maxWidth: 440, mx: "auto", textAlign: "center" }}>
+      <Typography
+        component="h1"
+        sx={{
+          fontFamily: "var(--font-display), DotGothic16, monospace",
+          fontSize: "1.4rem",
+          letterSpacing: "0.1em",
+          mb: 1,
+          color: dqColors.ink,
+        }}
+      >
+        ぼうけんのしょ
+      </Typography>
+      <Typography sx={{ color: dqColors.inkMuted, mb: 3, lineHeight: 1.8 }}>
+        Googleアカウントでログインし、キャリア診断を始めましょう
+      </Typography>
+      <Button
+        variant="contained"
+        size="large"
+        fullWidth
+        className="dq-cursor"
+        onClick={() => signIn("google", { callbackUrl: "/dashboard" })}
+        sx={{ py: 1.25 }}
+      >
+        Googleでログイン
+      </Button>
+      <Box sx={{ mt: 2 }}>
         <Button href="/" variant="text" size="small">
           トップへ戻る
         </Button>
       </Box>
-    </Card>
+    </RpgWindow>
   );
 }

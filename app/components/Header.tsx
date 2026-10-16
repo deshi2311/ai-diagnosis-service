@@ -9,6 +9,7 @@ import {
 } from "@mui/material";
 import CtaButton from "./CtaButton";
 import HeaderAuth from "./HeaderAuth";
+import { dqColors } from "../theme";
 
 const NAV_ITEMS = [
   { label: "特徴", href: "#features" },
@@ -23,16 +24,7 @@ export default function Header() {
   };
 
   return (
-    <AppBar
-      position="static"
-      color="inherit"
-      elevation={0}
-      sx={{
-        borderBottom: "1px solid",
-        borderColor: "divider",
-        bgcolor: "background.paper",
-      }}
-    >
+    <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar
         sx={{
           flexWrap: "wrap",
@@ -50,14 +42,14 @@ export default function Header() {
           component="a"
           href="#top"
           onClick={scrollToTop}
-          variant="h6"
           sx={{
-            fontWeight: 800,
-            color: "primary.main",
+            fontFamily: "var(--font-display), DotGothic16, monospace",
+            color: dqColors.gold,
             textDecoration: "none",
             flexShrink: 0,
             mr: { md: "auto" },
-            fontSize: { xs: "1rem", sm: "1.15rem" },
+            fontSize: { xs: "0.95rem", sm: "1.1rem" },
+            letterSpacing: "0.06em",
             lineHeight: 1.3,
             maxWidth: { xs: "100%", sm: "none" },
           }}
@@ -84,10 +76,11 @@ export default function Header() {
               key={item.href}
               href={item.href}
               underline="hover"
-              color="text.primary"
               sx={{
-                fontWeight: 600,
-                fontSize: { xs: "0.9rem", sm: "0.95rem" },
+                fontFamily: "var(--font-display), DotGothic16, monospace",
+                color: dqColors.parchment,
+                fontSize: { xs: "0.85rem", sm: "0.95rem" },
+                letterSpacing: "0.08em",
                 whiteSpace: "nowrap",
               }}
             >
@@ -107,7 +100,7 @@ export default function Header() {
           }}
         >
           <HeaderAuth />
-          <CtaButton size="medium" sx={{ px: { xs: 2, sm: 3 }, py: 1 }} />
+          <CtaButton size="medium" label="しんだん" sx={{ px: { xs: 1.5, sm: 2 }, py: 0.9 }} />
         </Box>
       </Toolbar>
     </AppBar>

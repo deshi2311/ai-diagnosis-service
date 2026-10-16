@@ -23,7 +23,7 @@ async function checkViewport(page, label, width, height) {
       navFeatures: !!document.body.innerText.includes("特徴"),
       navSteps: !!document.body.innerText.includes("診断の流れ"),
       navFaq: !!document.body.innerText.includes("FAQ"),
-      cta: (document.body.innerText.match(/無料で診断を始める/g) || []).length,
+      cta: (document.body.innerText.match(/無料で診断を始める|じんせいを すすめる|しんだん/g) || []).length,
       hero: !!document.body.innerText.includes("5問でわかる、あなたのキャリア"),
       heroSub: !!document.body.innerText.includes("AIがあなたに最適なキャリアロードマップを提案します"),
     };
@@ -109,7 +109,7 @@ async function main() {
         if (!appBar || !h1) return false;
         return appBar.compareDocumentPosition(h1) & Node.DOCUMENT_POSITION_FOLLOWING;
       })(),
-      ctaCount: (text.match(/無料で診断を始める/g) || []).length,
+      ctaCount: (text.match(/無料で診断を始める|じんせいを すすめる/g) || []).length,
       svgCount: svgs,
       expandIcons,
       order,
@@ -129,8 +129,8 @@ async function main() {
   record("S-9", content.text.includes(`© ${content.year} AIキャリア診断サービス`) || content.text.includes("©") && content.text.includes("AIキャリア診断サービス"));
   record("S-10", content.appBarBeforeHero && content.hasFeatures && content.hasSteps && content.hasFaq && content.order.includes("footer"));
 
-  // CTA labels
-  const ctaButtons = page.locator('button:has-text("無料で診断を始める")');
+  // CTA labels (aria-label keeps a11y name stable across DQ copy)
+  const ctaButtons = page.locator('button[aria-label="無料で診断を始める"]');
   const ctaCount = await ctaButtons.count();
   record("C-1", ctaCount === 3, `count=${ctaCount}`);
 
@@ -139,7 +139,7 @@ async function main() {
   let noNavAway = true;
   for (let i = 0; i < ctaCount; i++) {
     await page.goto(`${BASE_URL}/`, { waitUntil: "networkidle" });
-    await page.locator('button:has-text("無料で診断を始める")').nth(i).click();
+    await page.locator('button[aria-label="無料で診断を始める"]').nth(i).click();
     await page.waitForTimeout(400);
     const url = page.url();
     const snack = await page.locator("text=Coming Soon").isVisible().catch(() => false);

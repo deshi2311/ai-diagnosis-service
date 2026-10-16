@@ -23,7 +23,7 @@ export default async function DiagnosisEditPage({ params }: Props) {
   if (!doc || String(doc.userId) !== session.user.id) notFound();
 
   return (
-    <Box sx={{ minHeight: "100vh", bgcolor: "background.default" }}>
+    <Box sx={{ minHeight: "100vh" }}>
       <MemberHeader name={session.user.name} image={session.user.image} />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
         <DiagnosisEditForm

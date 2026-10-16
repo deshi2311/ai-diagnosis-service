@@ -1,10 +1,6 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
-import CheckCircleOutlinedIcon from "@mui/icons-material/CheckCircleOutlined";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import RpgWindow from "./RpgWindow";
+import { dqColors } from "../theme";
 
 const RESULTS = [
   "あなたの強みタイプ",
@@ -14,56 +10,46 @@ const RESULTS = [
 
 export default function ResultsSection() {
   return (
-    <Box component="section" sx={{ py: { xs: 8, md: 10 }, bgcolor: "background.default" }}>
+    <Box component="section" sx={{ py: { xs: 8, md: 10 } }}>
       <Container maxWidth="lg">
         <Typography
           component="h2"
-          variant="h2"
           align="center"
-          sx={{ fontSize: { xs: "1.5rem", md: "2rem" }, mb: 5 }}
+          sx={{
+            fontFamily: "var(--font-display), DotGothic16, monospace",
+            fontSize: { xs: "1.35rem", md: "1.85rem" },
+            color: dqColors.gold,
+            letterSpacing: "0.1em",
+            mb: 4,
+          }}
         >
           診断でわかること
         </Typography>
         <Grid container spacing={3}>
           {RESULTS.map((label, index) => (
             <Grid key={label} size={{ xs: 12, md: 4 }}>
-              <Box
-                sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 2,
-                  alignItems: "flex-start",
-                  p: 3,
-                  height: "100%",
-                  bgcolor: "background.paper",
-                  borderRadius: 3,
-                  border: "1px solid",
-                  borderColor: "divider",
-                }}
-              >
-                <Box
+              <RpgWindow sx={{ height: "100%" }}>
+                <Typography
                   sx={{
-                    width: 36,
-                    height: 36,
-                    borderRadius: "50%",
-                    bgcolor: "primary.main",
-                    color: "primary.contrastText",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    fontWeight: 700,
-                    flexShrink: 0,
+                    fontFamily: "var(--font-display), DotGothic16, monospace",
+                    color: dqColors.crimson,
+                    letterSpacing: "0.12em",
+                    mb: 1.5,
                   }}
                 >
-                  {index + 1}
-                </Box>
-                <Box sx={{ display: "flex", alignItems: "center", gap: 1 }}>
-                  <CheckCircleOutlinedIcon color="primary" fontSize="small" />
-                  <Typography variant="h6" sx={{ fontWeight: 700, fontSize: "1.05rem" }}>
-                    {label}
-                  </Typography>
-                </Box>
-              </Box>
+                  {String(index + 1).padStart(2, "0")}
+                </Typography>
+                <Typography
+                  className="dq-cursor"
+                  sx={{
+                    fontFamily: "var(--font-display), DotGothic16, monospace",
+                    fontSize: "1.05rem",
+                    color: dqColors.ink,
+                  }}
+                >
+                  {label}
+                </Typography>
+              </RpgWindow>
             </Grid>
           ))}
         </Grid>

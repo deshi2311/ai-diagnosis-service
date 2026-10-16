@@ -1,9 +1,6 @@
-import {
-  Box,
-  Container,
-  Grid,
-  Typography,
-} from "@mui/material";
+import { Box, Container, Grid, Typography } from "@mui/material";
+import RpgWindow from "./RpgWindow";
+import { dqColors } from "../theme";
 
 const STEPS = [
   { step: 1, title: "質問に回答", description: "シンプルな5問に答えるだけです。" },
@@ -16,51 +13,56 @@ export default function StepsSection() {
     <Box
       component="section"
       id="steps"
-      sx={{ py: { xs: 8, md: 10 }, bgcolor: "background.paper", scrollMarginTop: 16 }}
+      sx={{ py: { xs: 8, md: 10 }, scrollMarginTop: 16 }}
     >
       <Container maxWidth="lg">
         <Typography
           component="h2"
-          variant="h2"
           align="center"
-          sx={{ fontSize: { xs: "1.5rem", md: "2rem" }, mb: 5 }}
+          sx={{
+            fontFamily: "var(--font-display), DotGothic16, monospace",
+            fontSize: { xs: "1.35rem", md: "1.85rem" },
+            color: dqColors.gold,
+            letterSpacing: "0.1em",
+            mb: 4,
+          }}
         >
           診断の流れ
         </Typography>
         <Grid container spacing={3}>
           {STEPS.map((item) => (
             <Grid key={item.step} size={{ xs: 12, md: 4 }}>
-              <Box
-                sx={{
-                  textAlign: "center",
-                  p: 3,
-                  height: "100%",
-                  borderRadius: 3,
-                  bgcolor: "background.default",
-                  border: "1px solid",
-                  borderColor: "divider",
-                }}
-              >
+              <RpgWindow sx={{ height: "100%", textAlign: "center" }}>
                 <Typography
                   sx={{
                     display: "inline-block",
                     px: 2,
                     py: 0.5,
                     mb: 2,
-                    borderRadius: 999,
-                    bgcolor: "primary.main",
-                    color: "primary.contrastText",
-                    fontWeight: 700,
-                    fontSize: "0.875rem",
+                    border: `2px solid ${dqColors.gold}`,
+                    bgcolor: dqColors.navyMid,
+                    color: dqColors.gold,
+                    fontFamily: "var(--font-display), DotGothic16, monospace",
+                    letterSpacing: "0.12em",
+                    fontSize: "0.85rem",
                   }}
                 >
                   Step {item.step}
                 </Typography>
-                <Typography variant="h6" sx={{ fontWeight: 700, mb: 1 }}>
+                <Typography
+                  sx={{
+                    fontFamily: "var(--font-display), DotGothic16, monospace",
+                    mb: 1,
+                    fontSize: "1.1rem",
+                    color: dqColors.ink,
+                  }}
+                >
                   {item.title}
                 </Typography>
-                <Typography color="text.secondary">{item.description}</Typography>
-              </Box>
+                <Typography sx={{ color: dqColors.inkMuted, lineHeight: 1.7 }}>
+                  {item.description}
+                </Typography>
+              </RpgWindow>
             </Grid>
           ))}
         </Grid>
