@@ -1,7 +1,8 @@
 "use client";
 
 import { Button, type ButtonProps } from "@mui/material";
-import { useCta } from "./CtaProvider";
+import { useRouter } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 type CtaButtonProps = Omit<ButtonProps, "onClick" | "children"> & {
   fullWidthOnMobile?: boolean;
@@ -13,13 +14,22 @@ export default function CtaButton({
   size = "large",
   ...rest
 }: CtaButtonProps) {
-  const { onCtaClick } = useCta();
+  const router = useRouter();
+  const { status } = useSession();
+
+  const onClick = () => {
+    if (status === "authenticated") {
+      router.push("/diagnosis");
+      return;
+    }
+    router.push("/auth/signin?callbackUrl=/diagnosis");
+  };
 
   return (
     <Button
       variant="contained"
       size={size}
-      onClick={onCtaClick}
+      onClick={onClick}
       disableElevation
       sx={{
         px: 3,
@@ -32,9 +42,7 @@ export default function CtaButton({
         "&:hover": {
           background: "linear-gradient(135deg, #0D47A1 0%, #1E88E5 100%)",
         },
-        ...(fullWidthOnMobile
-          ? { width: { xs: "100%", sm: "auto" } }
-          : {}),
+        ...(fullWidthOnMobile ? { width: { xs: "100%", sm: "auto" } } : {}),
         ...sx,
       }}
       {...rest}

@@ -55,6 +55,12 @@ export default function MemberHeader({ name, image }: MemberHeaderProps) {
           <Button href="/dashboard" variant="text" size="small">
             ダッシュボード
           </Button>
+          <Button href="/diagnosis" variant="text" size="small">
+            診断
+          </Button>
+          <Button href="/diagnosis/history" variant="text" size="small">
+            履歴
+          </Button>
           <Button href="/profile" variant="text" size="small">
             プロフィール
           </Button>

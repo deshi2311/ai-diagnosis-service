@@ -1,4 +1,13 @@
-import { Avatar, Box, Card, CardContent, Container, Typography } from "@mui/material";
+import {
+  Avatar,
+  Box,
+  Button,
+  Card,
+  CardContent,
+  Container,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import MemberHeader from "@/app/components/MemberHeader";
@@ -20,7 +29,7 @@ export default async function DashboardPage() {
         <Typography component="h1" variant="h4" sx={{ fontWeight: 800, mb: 3 }}>
           ダッシュボード
         </Typography>
-        <Card elevation={0} sx={{ border: "1px solid", borderColor: "divider" }}>
+        <Card elevation={0} sx={{ border: "1px solid", borderColor: "divider", mb: 3 }}>
           <CardContent sx={{ display: "flex", gap: 2, alignItems: "center", p: 3 }}>
             <Avatar alt={name ?? "ユーザー"} src={image ?? undefined} sx={{ width: 64, height: 64 }} />
             <Box>
@@ -29,11 +38,19 @@ export default async function DashboardPage() {
               </Typography>
               <Typography color="text.secondary">{email}</Typography>
               <Typography color="text.secondary" sx={{ mt: 1 }}>
-                会員専用トップページです。プロフィールの確認・編集ができます。
+                会員専用トップページです。診断の開始や履歴の確認ができます。
               </Typography>
             </Box>
           </CardContent>
         </Card>
+        <Stack spacing={1} sx={{ flexDirection: { xs: "column", sm: "row" } }}>
+          <Button href="/diagnosis" variant="contained">
+            キャリア診断を始める
+          </Button>
+          <Button href="/diagnosis/history" variant="outlined">
+            診断履歴を見る
+          </Button>
+        </Stack>
       </Container>
     </Box>
   );
