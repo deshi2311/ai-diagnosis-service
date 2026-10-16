@@ -26,6 +26,29 @@ body {
   animation: dq-cursor-blink 1s steps(1) infinite;
 }
 
+.dq-type-cursor::after {
+  content: "▼";
+  display: inline-block;
+  margin-left: 0.15em;
+  font-size: 0.75em;
+  vertical-align: middle;
+  animation: dq-cursor-blink 0.7s steps(1) infinite;
+}
+
+.dq-type-cursor-done::after {
+  content: "▼";
+  animation: dq-cursor-blink 1s steps(1) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dq-type-cursor::after,
+  .dq-type-cursor-done::after,
+  .dq-cursor::before {
+    animation: none;
+    opacity: 1;
+  }
+}
+
 @keyframes dq-window-in {
   from {
     opacity: 0;

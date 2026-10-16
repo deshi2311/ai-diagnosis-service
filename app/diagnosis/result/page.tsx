@@ -15,6 +15,7 @@ import { connectMongo } from "@/lib/mongoose";
 import { Diagnosis } from "@/lib/models/Diagnosis";
 import MemberHeader from "@/app/components/MemberHeader";
 import RpgWindow from "@/app/components/RpgWindow";
+import DiagnosisResultIntro from "@/app/components/diagnosis/DiagnosisResultIntro";
 import { dqColors } from "@/app/theme";
 
 export const dynamic = "force-dynamic";
@@ -40,21 +41,7 @@ export default async function DiagnosisResultPage({ searchParams }: Props) {
     <Box sx={{ minHeight: "100vh" }}>
       <MemberHeader name={session.user.name} image={session.user.image} />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
-        <Typography
-          component="h1"
-          sx={{
-            fontFamily: "var(--font-display), DotGothic16, monospace",
-            fontSize: { xs: "1.5rem", md: "1.9rem" },
-            color: dqColors.gold,
-            letterSpacing: "0.12em",
-            mb: 1,
-          }}
-        >
-          てんしょく せいこう！
-        </Typography>
-        <Typography sx={{ color: dqColors.parchment, opacity: 0.8, mb: 3 }}>
-          AI分析が完了しました
-        </Typography>
+        <DiagnosisResultIntro />
 
         <Stack spacing={2.5}>
           <RpgWindow title="つよさタイプ" className="dq-enter">

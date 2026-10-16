@@ -3,6 +3,7 @@
 import { Box, Container, Typography } from "@mui/material";
 import CtaButton from "./CtaButton";
 import RpgWindow from "./RpgWindow";
+import RpgTypeText from "./RpgTypeText";
 import { dqColors } from "../theme";
 
 export default function HeroSection() {
@@ -42,15 +43,17 @@ export default function HeroSection() {
             5問でわかる、あなたのキャリア
           </Typography>
           <Typography
+            component="div"
             sx={{
               fontFamily: "var(--font-display), DotGothic16, monospace",
               color: dqColors.inkMuted,
               fontSize: { xs: "0.95rem", md: "1.15rem" },
               mb: 1,
               letterSpacing: "0.12em",
+              minHeight: "1.6em",
             }}
           >
-            つぎの しょくぎょうを えらべ
+            <RpgTypeText text="つぎの しょくぎょうを えらべ" msPerChar={55} />
           </Typography>
           <Typography
             sx={{

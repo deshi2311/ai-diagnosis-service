@@ -16,6 +16,7 @@ import {
   type DiagnosisAnswers,
 } from "@/lib/diagnosis/questions";
 import RpgWindow from "../RpgWindow";
+import RpgTypeText from "../RpgTypeText";
 import { dqColors } from "../../theme";
 
 const emptyAnswers: DiagnosisAnswers = {
@@ -56,8 +57,11 @@ export default function DiagnosisForm() {
 
   return (
     <RpgWindow title="ぼうけんのしょ — キャリア診断" className="dq-enter">
-      <Typography sx={{ color: dqColors.inkMuted, mb: 3, lineHeight: 1.8 }}>
-        5つの問いに答えよ。AIがつぎの道を示す（約1分）
+      <Typography
+        component="div"
+        sx={{ color: dqColors.inkMuted, mb: 3, lineHeight: 1.8, minHeight: "1.8em" }}
+      >
+        <RpgTypeText text="5つの問いに答えよ。AIがつぎの道を示す（約1分）" msPerChar={42} />
       </Typography>
       <Box component="form" onSubmit={onSubmit}>
         <Stack spacing={2.5}>
