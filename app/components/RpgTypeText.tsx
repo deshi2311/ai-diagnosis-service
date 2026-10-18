@@ -1,6 +1,13 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import {
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+  type KeyboardEvent as ReactKeyboardEvent,
+} from "react";
 import { Box, Typography, type TypographyProps } from "@mui/material";
 import { dqColors } from "../theme";
 
@@ -64,7 +71,7 @@ export default function RpgTypeText({
 
   useEffect(() => {
     if (done) return;
-    const onKey = (e: KeyboardEvent) => {
+    const onKey = (e: globalThis.KeyboardEvent) => {
       if (e.key === "Enter" || e.key === " " || e.key === "Escape") {
         e.preventDefault();
         skip();
@@ -84,7 +91,7 @@ export default function RpgTypeText({
       aria-label={text}
       aria-live="polite"
       onClick={skip}
-      onKeyDown={(e) => {
+      onKeyDown={(e: ReactKeyboardEvent<HTMLSpanElement>) => {
         if (e.key === "Enter" || e.key === " ") {
           e.preventDefault();
           skip();
