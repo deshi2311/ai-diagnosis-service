@@ -15,7 +15,9 @@ import { connectMongo } from "@/lib/mongoose";
 import { Diagnosis } from "@/lib/models/Diagnosis";
 import MemberHeader from "@/app/components/MemberHeader";
 import RpgWindow from "@/app/components/RpgWindow";
+import DiagnosisDisclaimer from "@/app/components/diagnosis/DiagnosisDisclaimer";
 import DiagnosisResultIntro from "@/app/components/diagnosis/DiagnosisResultIntro";
+import NextStepsList from "@/app/components/diagnosis/NextStepsList";
 import { dqColors } from "@/app/theme";
 
 export const dynamic = "force-dynamic";
@@ -89,6 +91,10 @@ export default async function DiagnosisResultPage({ searchParams }: Props) {
             </Typography>
           </RpgWindow>
 
+          <RpgWindow title="つぎのいっぽ">
+            <NextStepsList steps={doc.result?.nextSteps ?? []} />
+          </RpgWindow>
+
           <RpgWindow title="コマンド">
             <Stack direction="row" spacing={1} sx={{ flexWrap: "wrap", gap: 1 }}>
               <Button href={`/diagnosis/${id}`} variant="contained" className="dq-cursor">
@@ -102,6 +108,8 @@ export default async function DiagnosisResultPage({ searchParams }: Props) {
               </Button>
             </Stack>
           </RpgWindow>
+
+          <DiagnosisDisclaimer />
         </Stack>
       </Container>
     </Box>

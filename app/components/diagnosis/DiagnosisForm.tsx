@@ -61,7 +61,7 @@ export default function DiagnosisForm() {
         component="div"
         sx={{ color: dqColors.inkMuted, mb: 3, lineHeight: 1.8, minHeight: "1.8em" }}
       >
-        <RpgTypeText text="5つの問いに答えよ。AIがつぎの道を示す（約1分）" msPerChar={42} />
+        <RpgTypeText text="5つの問いに答えよ。AIがつぎの道を示す（約3分）" msPerChar={42} />
       </Typography>
       <Box component="form" onSubmit={onSubmit}>
         <Stack spacing={2.5}>

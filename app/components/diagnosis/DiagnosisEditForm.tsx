@@ -99,14 +99,15 @@ export default function DiagnosisEditForm({ initial }: { initial: EditPayload })
             multiline
             minRows={3}
           />
-          <TextField
-            label="次の一歩（1行に1つ）"
-            value={nextSteps}
-            onChange={(e) => setNextSteps(e.target.value)}
-            fullWidth
-            multiline
-            minRows={3}
-          />
+            <TextField
+              label="次の一歩（1行目=今日やること＋所要時間、2行目以降=そのあと）"
+              value={nextSteps}
+              onChange={(e) => setNextSteps(e.target.value)}
+              fullWidth
+              multiline
+              minRows={3}
+              helperText="1行目に今日の一手（例: ○○する（約20分））を書いてください"
+            />
           <TextField
             label="要約"
             value={summary}

@@ -21,7 +21,7 @@ export default function DiagnosisResultIntro() {
         }}
       >
         <RpgTypeText
-          text="てんしょく せいこう！"
+          text="しんだん かんりょう！"
           msPerChar={55}
           onDone={() => setPhase("sub")}
         />

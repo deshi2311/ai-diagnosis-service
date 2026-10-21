@@ -15,6 +15,8 @@ import { Diagnosis } from "@/lib/models/Diagnosis";
 import { DIAGNOSIS_QUESTIONS } from "@/lib/diagnosis/questions";
 import MemberHeader from "@/app/components/MemberHeader";
 import DiagnosisDetailActions from "@/app/components/diagnosis/DiagnosisDetailActions";
+import DiagnosisDisclaimer from "@/app/components/diagnosis/DiagnosisDisclaimer";
+import NextStepsList from "@/app/components/diagnosis/NextStepsList";
 import RpgWindow from "@/app/components/RpgWindow";
 import { dqColors } from "@/app/theme";
 
@@ -104,27 +106,9 @@ export default async function DiagnosisDetailPage({ params }: Props) {
                 </ListItem>
               ))}
             </List>
-            <Typography
-              sx={{
-                fontFamily: "var(--font-display), DotGothic16, monospace",
-                mt: 2,
-                mb: 1,
-                color: dqColors.ink,
-              }}
-            >
-              次の一歩
-            </Typography>
-            <List dense>
-              {(doc.result?.nextSteps ?? []).map((step: string) => (
-                <ListItem key={step} disableGutters>
-                  <ListItemText
-                    primary={
-                      <Typography className="dq-cursor">{step}</Typography>
-                    }
-                  />
-                </ListItem>
-              ))}
-            </List>
+            <Box sx={{ mt: 2.5 }}>
+              <NextStepsList steps={doc.result?.nextSteps ?? []} />
+            </Box>
           </RpgWindow>
 
           <RpgWindow title="キャリアロードマップ">
@@ -151,6 +135,8 @@ export default async function DiagnosisDetailPage({ params }: Props) {
               ))}
             </Stack>
           </RpgWindow>
+
+          <DiagnosisDisclaimer />
         </Stack>
       </Container>
     </Box>
