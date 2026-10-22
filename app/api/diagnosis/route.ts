@@ -4,6 +4,9 @@ import { requireUserId } from "@/lib/diagnosis/auth";
 import { validateAnswers } from "@/lib/diagnosis/questions";
 import { analyzeCareer } from "@/lib/diagnosis/analyzeCareer";
 import { Diagnosis } from "@/lib/models/Diagnosis";
+import { readAnonymousSessionId } from "@/lib/analytics/session";
+import { trackAnalyticsEvent } from "@/lib/analytics/track";
+import { AdminErrorLog } from "@/lib/models/AdminErrorLog";
 
 export const dynamic = "force-dynamic";
 export const maxDuration = 60;
@@ -51,8 +54,36 @@ export async function POST(request: Request) {
     );
   }
 
+  const sid = await readAnonymousSessionId();
+  const requestId = new mongoose.Types.ObjectId().toHexString();
+  if (sid) {
+    try {
+      await trackAnalyticsEvent({
+        event: "diagnosis_answered",
+        anonymousSessionId: sid,
+        userId: gate.userId,
+        dedupeKey: `diagnosis_answered:${sid}:${gate.userId}:${requestId}`,
+        meta: { source: "diagnosis_post" },
+      });
+    } catch (e) {
+      console.error("track diagnosis_answered", e);
+    }
+  }
+
   const analysis = await analyzeCareer(answers);
   if (!analysis.ok) {
+    try {
+      await AdminErrorLog.create({
+        occurredAt: new Date(),
+        type: "diagnosis_ai_failure",
+        message: analysis.message.slice(0, 300),
+        impact: "診断完了不可",
+        status: "open",
+        source: "api/diagnosis",
+      });
+    } catch {
+      // ignore
+    }
     return NextResponse.json(
       { error: analysis.message, code: analysis.code },
       { status: 422 },
@@ -72,6 +103,21 @@ export async function POST(request: Request) {
     },
     careerRoadmap: analysis.analysis.careerRoadmap,
   });
+
+  if (sid) {
+    try {
+      await trackAnalyticsEvent({
+        event: "diagnosis_completed",
+        anonymousSessionId: sid,
+        userId: gate.userId,
+        diagnosisId: String(doc._id),
+        dedupeKey: `diagnosis_completed:${String(doc._id)}`,
+        meta: { source: "diagnosis_post" },
+      });
+    } catch (e) {
+      console.error("track diagnosis_completed", e);
+    }
+  }
 
   return NextResponse.json({ id: String(doc._id) }, { status: 201 });
 }

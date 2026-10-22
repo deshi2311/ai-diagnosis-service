@@ -3,6 +3,7 @@ import { redirect } from "next/navigation";
 import { auth } from "@/auth";
 import MemberHeader from "@/app/components/MemberHeader";
 import DiagnosisForm from "@/app/components/diagnosis/DiagnosisForm";
+import AnalyticsTracker from "@/app/components/analytics/AnalyticsTracker";
 import { dqColors } from "@/app/theme";
 
 export const dynamic = "force-dynamic";
@@ -13,7 +14,12 @@ export default async function DiagnosisPage() {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <MemberHeader name={session.user.name} image={session.user.image} />
+      <AnalyticsTracker event="diagnosis_started" />
+      <MemberHeader
+        name={session.user.name}
+        image={session.user.image}
+        role={session.user.role}
+      />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
         <Typography
           component="h1"

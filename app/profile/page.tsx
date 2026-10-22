@@ -16,7 +16,11 @@ export default async function ProfilePage() {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <MemberHeader name={session.user.name} image={session.user.image} />
+      <MemberHeader
+        name={session.user.name}
+        image={session.user.image}
+        role={session.user.role}
+      />
       <Container maxWidth="sm" sx={{ py: { xs: 4, md: 6 } }}>
         <Typography
           component="h1"

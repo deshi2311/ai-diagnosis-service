@@ -24,7 +24,11 @@ export default async function DiagnosisEditPage({ params }: Props) {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <MemberHeader name={session.user.name} image={session.user.image} />
+      <MemberHeader
+        name={session.user.name}
+        image={session.user.image}
+        role={session.user.role}
+      />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
         <DiagnosisEditForm
           initial={{

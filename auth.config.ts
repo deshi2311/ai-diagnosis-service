@@ -44,7 +44,8 @@ export default {
       const isProtected =
         pathname.startsWith("/dashboard") ||
         pathname.startsWith("/profile") ||
-        pathname.startsWith("/diagnosis");
+        pathname.startsWith("/diagnosis") ||
+        pathname.startsWith("/admin");
       if (isProtected) {
         return !!auth?.user;
       }

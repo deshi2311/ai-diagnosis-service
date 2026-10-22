@@ -11,13 +11,28 @@ import {
 } from "@mui/material";
 import Link from "next/link";
 import { dqColors } from "../theme";
+import type { UserRole } from "@/types/next-auth";
 
 type MemberHeaderProps = {
   name?: string | null;
   image?: string | null;
+  role?: UserRole | null;
 };
 
-export default function MemberHeader({ name, image }: MemberHeaderProps) {
+export default function MemberHeader({ name, image, role }: MemberHeaderProps) {
+  const onSignOut = async () => {
+    try {
+      await fetch("/api/analytics/session", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ rotate: true }),
+      });
+    } catch {
+      // ignore
+    }
+    await signOut({ callbackUrl: "/" });
+  };
+
   return (
     <AppBar position="static" color="transparent" elevation={0}>
       <Toolbar
@@ -60,11 +75,12 @@ export default function MemberHeader({ name, image }: MemberHeaderProps) {
           <Button href="/profile" variant="text" size="small">
             プロフィール
           </Button>
-          <Button
-            variant="outlined"
-            size="small"
-            onClick={() => signOut({ callbackUrl: "/" })}
-          >
+          {role === "admin" ? (
+            <Button href="/admin" variant="outlined" size="small">
+              管理
+            </Button>
+          ) : null}
+          <Button variant="outlined" size="small" onClick={() => void onSignOut()}>
             ログアウト
           </Button>
           <Avatar

@@ -6,7 +6,11 @@
     "dev": "next dev --turbopack",
     "build": "next build --turbopack",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "typecheck": "tsc --noEmit",
+    "verify:admin-auth": "node scripts/admin-auth-verify.mjs",
+    "verify:admin-kpi": "node scripts/admin-kpi-verify.mjs",
+    "verify:admin-funnel": "node scripts/admin-funnel-seed-verify.mjs"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.135.0",
@@ -17,12 +21,15 @@
     "@mui/icons-material": "^9.4.0",
     "@mui/material": "^9.4.0",
     "@mui/material-nextjs": "^9.4.0",
+    "@mui/x-data-grid": "^9.16.0",
+    "@sentry/nextjs": "^11.8.0",
     "mongodb": "^6.21.0",
     "mongoose": "^9.11.2",
     "next": "15.5.27",
     "next-auth": "^5.0.0-beta.32",
     "react": "19.1.0",
-    "react-dom": "19.1.0"
+    "react-dom": "19.1.0",
+    "recharts": "^3.10.1"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",

@@ -18,6 +18,7 @@ import RpgWindow from "@/app/components/RpgWindow";
 import DiagnosisDisclaimer from "@/app/components/diagnosis/DiagnosisDisclaimer";
 import DiagnosisResultIntro from "@/app/components/diagnosis/DiagnosisResultIntro";
 import NextStepsList from "@/app/components/diagnosis/NextStepsList";
+import AnalyticsTracker from "@/app/components/analytics/AnalyticsTracker";
 import { dqColors } from "@/app/theme";
 
 export const dynamic = "force-dynamic";
@@ -41,7 +42,12 @@ export default async function DiagnosisResultPage({ searchParams }: Props) {
 
   return (
     <Box sx={{ minHeight: "100vh" }}>
-      <MemberHeader name={session.user.name} image={session.user.image} />
+      <AnalyticsTracker event="result_viewed" diagnosisId={id} />
+      <MemberHeader
+        name={session.user.name}
+        image={session.user.image}
+        role={session.user.role}
+      />
       <Container maxWidth="md" sx={{ py: { xs: 4, md: 6 } }}>
         <DiagnosisResultIntro />
 
