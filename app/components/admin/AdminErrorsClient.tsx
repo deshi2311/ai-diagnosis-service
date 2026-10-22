@@ -73,16 +73,18 @@ export default function AdminErrorsClient() {
           label="状態"
           value={status}
           onChange={(e) => setStatus(e.target.value)}
-          InputLabelProps={{ shrink: true }}
-          sx={{
-            minWidth: 140,
-            "& .MuiInputLabel-root": {
-              color: dqColors.ink,
-              bgcolor: "#FFF8E7",
-              px: 0.5,
-              "&.Mui-focused": { color: dqColors.ink },
+          slotProps={{
+            inputLabel: {
+              shrink: true,
+              sx: {
+                color: dqColors.ink,
+                bgcolor: "#FFF8E7",
+                px: 0.5,
+                "&.Mui-focused": { color: dqColors.ink },
+              },
             },
           }}
+          sx={{ minWidth: 140 }}
         >
           <MenuItem value="open">open</MenuItem>
           <MenuItem value="resolved">resolved</MenuItem>
